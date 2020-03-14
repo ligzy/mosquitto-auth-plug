@@ -372,7 +372,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 				//pass if equals 
 				if(strcmp(expanded,topic)==0)
 				{
-						*bf = true;
+						bf = true;
 				}else
 				{
 					/* code */
@@ -381,7 +381,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 				
 				if (bf) match = BACKEND_ALLOW;
 				_log(LOG_DEBUG, "  mysql: topic_matches(%s, %s) == %d",
-				     expanded, v, bf);
+				     expanded, topic, bf);
 
 				free(expanded);
 			}

@@ -366,7 +366,16 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 
 			t_expand(clientid, username, v, &expanded);
 			if (expanded && *expanded) {
-				mosquitto_topic_matches_sub(expanded, topic, &bf);
+				//pass if equals 
+				if(strcmp(expanded,topic)==0)
+				{
+						*bf = true;
+				}else
+				{
+					/* code */
+					mosquitto_topic_matches_sub(expanded, topic, &bf);
+				}
+				
 				if (bf) match = BACKEND_ALLOW;
 				_log(LOG_DEBUG, "  mysql: topic_matches(%s, %s) == %d",
 				     expanded, v, bf);

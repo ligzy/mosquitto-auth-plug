@@ -366,6 +366,9 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 
 			t_expand(clientid, username, v, &expanded);
 			if (expanded && *expanded) {
+				_log(LOG_DEBUG, "  mysql: expanded & topic (%s, %s) ",
+				     expanded,  topic );
+
 				//pass if equals 
 				if(strcmp(expanded,topic)==0)
 				{

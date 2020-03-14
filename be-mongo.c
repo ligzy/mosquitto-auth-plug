@@ -365,9 +365,9 @@ bool be_mongo_check_acl_topics_map(const bson_iter_t *topics, const char *req_to
 					// e.g. req_access == 3 (rw) -> granted = (3 & 1 > 0) == true
 					const char *permission = bson_iter_utf8(&iter, NULL);
 					if (strcmp(permission, "r") == 0) {
-						granted = (req_access & 1) > 0;
+						granted = (req_access >= 1) ;
 					} else if (strcmp(permission, "w") == 0) {
-						granted = (req_access & 2) > 0;
+						granted = (req_access >= 2);
 					} else if (strcmp(permission, "rw") == 0) {
 						granted = true;
 					}

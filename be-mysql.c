@@ -376,7 +376,11 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 				}else
 				{
 					/* code */
-					mosquitto_topic_matches_sub(expanded, topic, &bf);
+					int num = strlen(topic) +1;
+					char* topicNew = new char[num];
+       				strcpy(topic, topicNew);
+					removechar(topicNew,"+");
+					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
 				}
 				
 				if (bf) match = BACKEND_ALLOW;
@@ -395,4 +399,18 @@ out:
 
 	return (match);
 }
+void removechar(char str[], char t )
+{
+    int i,j;
+    i = 0;
+    while(i<strlen(str))
+    {
+        if (str[i]==t) 
+        { 
+            for (j=i; j<strlen(str); j++)
+                str[j]=str[j+1];   
+        } else i++;
+    }
+}
+
 #endif  /* BE_MYSQL */

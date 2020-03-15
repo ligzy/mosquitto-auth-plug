@@ -365,12 +365,22 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 			char *expanded;
 
 			t_expand(clientid, username, v, &expanded);
+			int length=strlen(expanded);
+			int lentopic=strlen(topic);
 			if (expanded && *expanded) {
 				_log(LOG_DEBUG, "  mysql: expanded & topic (%s, %s) ",
 				     expanded,  topic );
 
 				//pass if equals 
 				if(strcmp(expanded,topic)==0)
+				{
+						bf = true;
+				}else
+				if(strcmp(expanded,"#")==0)
+				{
+						bf = true;
+				}else
+				if(lentopic>=length-1 && expanded[length-1]=="#" && strncmp(expanded,topic,length-1)==0 )
 				{
 						bf = true;
 				}else
@@ -381,6 +391,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
        				strcpy(topic, topicNew);
 					removechar(topicNew,"+");
 					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
+					free(topicNew);
 				}
 				
 				if (bf) match = BACKEND_ALLOW;

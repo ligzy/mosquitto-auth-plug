@@ -63,6 +63,15 @@ static char *get_bool(char *option, char *defval)
 	return defval;
 }
 
+void removeChar(char *str, char garbage) {
+    char *src, *dst;
+    for (src = dst = str; *src != '\0'; src++) {
+        *dst = *src;
+        if (*dst != garbage) dst++;
+    }
+    *dst = '\0';
+}
+
 void *be_mysql_init()
 {
 	struct mysql_backend *conf;
@@ -413,13 +422,5 @@ out:
 	return (match);
 }
 
-void removeChar(char *str, char garbage) {
-    char *src, *dst;
-    for (src = dst = str; *src != '\0'; src++) {
-        *dst = *src;
-        if (*dst != garbage) dst++;
-    }
-    *dst = '\0';
-}
 
 #endif  /* BE_MYSQL */

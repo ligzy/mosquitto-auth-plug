@@ -62,7 +62,7 @@ void __log(int priority, const char *fmt, ...)
 	time(&now);
 
 	va_start(va, fmt);
-	fprintf(stderr, "%ld: |-- ", now);
+	fprintf(stderr, "%ld: %s-%d |-- ", now,__FILE__, __LINE__);
 	vfprintf(stderr, fmt, va);
 	fprintf(stderr, "\n");
 	fflush(stderr);
@@ -75,6 +75,7 @@ void _fatal(const char *fmt, ...)
 
 	va_start(va, fmt);
 	fprintf(stderr, "|-- ");
+	fprintf(stderr, " %s-%d |-- ", __FILE__, __LINE__);
 	vfprintf(stderr, fmt, va);
 	fprintf(stderr, "\n");
 	fprintf(stderr, "|-- *** ABORT.\n");

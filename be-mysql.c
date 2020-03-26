@@ -332,6 +332,8 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 	MYSQL_RES *res = NULL;
 	MYSQL_ROW rowdata;
 
+	_log(LOG_DEBUG, "be_mysql_aclcheck: %s", topic);
+
 	if (!conf || !conf->aclquery)
 		return BACKEND_DEFER;
 
@@ -351,7 +353,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 	sprintf(query, conf->aclquery, u, acc);
 	free(u);
 
-	//_log(LOG_DEBUG, "SQL: %s", query);
+	_log(LOG_DEBUG, "SQL: %s", query);
 
 	if (mysql_query(conf->mysql, query)) {
 		_log(LOG_NOTICE, "%s", mysql_error(conf->mysql));

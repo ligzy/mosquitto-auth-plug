@@ -391,7 +391,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 					size_t num = strlen(topic) +1;
 					char* topicNew =(char*) malloc(num);
        				strcpy( topicNew,topic);
-					removechar(topicNew,'+');
+					removeChar(topicNew,'+');
 					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
 					free(topicNew);
 				}
@@ -413,18 +413,13 @@ out:
 	return (match);
 }
 
-void removechar(const char* str, char t )
-{
-    int i,j;
-    i = 0;
-    while(i<strlen(str))
-    {
-        if (str[i]==t) 
-        { 
-            for (j=i; j<strlen(str); j++)
-                str[j]=str[j+1];   
-        } else i++;
+void removeChar(char *str, char garbage) {
+    char *src, *dst;
+    for (src = dst = str; *src != '\0'; src++) {
+        *dst = *src;
+        if (*dst != garbage) dst++;
     }
+    *dst = '\0';
 }
 
 #endif  /* BE_MYSQL */

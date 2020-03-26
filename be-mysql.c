@@ -365,6 +365,8 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 			char *expanded;
 
 			t_expand(clientid, username, v, &expanded);
+			_log(LOG_DEBUG, "  mysql: expanded   (%s) ", expanded);
+
 			int length=strlen(expanded);
 			int lentopic=strlen(topic);
 			if (expanded && *expanded) {
@@ -386,9 +388,9 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 				}else
 				{
 					/* code */
-					int num = strlen(topic) +1;
-					char* topicNew = new char[num];
-       				strcpy(topic, topicNew);
+					size_t num = strlen(topic) +1;
+					char* topicNew =(char*) malloc(num);
+       				strcpy( topicNew,topic);
 					removechar(topicNew,"+");
 					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
 					free(topicNew);
@@ -410,6 +412,7 @@ out:
 
 	return (match);
 }
+
 void removechar(char str[], char t )
 {
     int i,j;

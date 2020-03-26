@@ -378,11 +378,11 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 				{
 						bf = true;
 				}else
-				if(strcmp(expanded,"#")==0)
+				if(expanded[0]=='#' && strlen(expanded)==1)
 				{
 						bf = true;
 				}else
-				if(lentopic>=length-1 && expanded[length-1]=="#" && strncmp(expanded,topic,length-1)==0 )
+				if(lentopic>=length-1 && expanded[length-1]=='#' && strncmp(expanded,topic,length-1)==0 )
 				{
 						bf = true;
 				}else

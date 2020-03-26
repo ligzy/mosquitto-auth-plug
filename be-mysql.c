@@ -413,7 +413,7 @@ out:
 	return (match);
 }
 
-void removechar(char str[], char t )
+void removechar(const char* str, char t )
 {
     int i,j;
     i = 0;

@@ -391,7 +391,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 					size_t num = strlen(topic) +1;
 					char* topicNew =(char*) malloc(num);
        				strcpy( topicNew,topic);
-					removechar(topicNew,"+");
+					removechar(topicNew,'+');
 					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
 					free(topicNew);
 				}

@@ -328,7 +328,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 	char *query = NULL, *u = NULL, *v;
 	long ulen;
 	int match = BACKEND_DEFER;
-	bool bf;
+	bool bf=false;
 	MYSQL_RES *res = NULL;
 	MYSQL_ROW rowdata;
 
@@ -404,13 +404,13 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
        				strcpy( topicNew,topic);
 					removeChar(topicNew,'+');
 					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
-					_log(LOG_DEBUG, "  mysql: mosquitto_topic_matches_sub(%s, %s) == %d",
+					_log(LOG_DEBUG, "mysql: mosquitto_topic_matches_sub(%s, %s) == %d",
 									     expanded, topicNew, bf);
 
 					free(topicNew);
 				}
 
-				_log(LOG_DEBUG, "  mysql: topic_matches(%s, %s) == %d",
+				_log(LOG_DEBUG, "mysql: topic_matches(%s, %s) == %d",
 				     expanded, topic, bf);
 
 				free(expanded);

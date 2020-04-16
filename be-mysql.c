@@ -399,9 +399,9 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 				}else
 				{
 					/* code */
-					mosquitto_topic_matches_sub(expanded, topic, &bf);
-					_log(LOG_DEBUG, "mysql: mosquitto_topic_matches_sub1(%s, %s) == %d",
-									     expanded, topic, bf);
+//					mosquitto_topic_matches_sub(expanded, topic, &bf);
+//					_log(LOG_DEBUG, "mysql: mosquitto_topic_matches_sub1(%s, %s) == %d",
+//									     expanded, topic, bf);
 
 					size_t num = strlen(topic) +1;
 					char* topicNew =(char*) malloc(num);

@@ -328,7 +328,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 	char *query = NULL, *u = NULL, *v;
 	long ulen;
 	int match = BACKEND_DEFER;
-	bool bf;
+	bool bf=false;
 	MYSQL_RES *res = NULL;
 	MYSQL_ROW rowdata;
 

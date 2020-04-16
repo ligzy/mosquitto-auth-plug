@@ -332,7 +332,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 	MYSQL_RES *res = NULL;
 	MYSQL_ROW rowdata;
 
-	_log(LOG_DEBUG, "be_mysql_aclcheck: %s", topic);
+	_log(LOG_DEBUG, "be_mysql_aclcheck: %s,%s, %s",clientid,username, topic);
 
 	if (!conf || !conf->aclquery)
 		return BACKEND_DEFER;
@@ -383,6 +383,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 			if (expanded && *expanded) {
 				_log(LOG_DEBUG, "  mysql: expanded & topic (%s, %s) ",
 				     expanded,  topic );
+				int rc=0;
 
 				//pass if equals 
 				if(strcmp(expanded,topic)==0)
@@ -403,15 +404,23 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 					char* topicNew =(char*) malloc(num);
        				strcpy( topicNew,topic);
 					removeChar(topicNew,'+');
-					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
+					rc=mosquitto_topic_matches_sub(expanded, topicNew, &bf);
+					_log(LOG_DEBUG, "  mysql: mosquitto_topic_matches_sub(%s, %s) == %d",
+									     expanded, topicNew, bf);
+
 					free(topicNew);
 				}
-				
-				if (bf) match = BACKEND_ALLOW;
+
 				_log(LOG_DEBUG, "  mysql: topic_matches(%s, %s) == %d",
 				     expanded, topic, bf);
 
 				free(expanded);
+				
+				if (bf) {
+					match = BACKEND_ALLOW;
+					break;
+				}
+
 			}
 		}
 	}

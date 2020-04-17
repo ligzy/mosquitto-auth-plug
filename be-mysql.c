@@ -410,7 +410,7 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 
 					//remove the last #
 					size_t lennew=strlen(topic);
-					if(topicNew[lennew-1]=='#')
+					if(lennew>1 && topicNew[lennew-1]=='#')
 					{
 						topicNew[lennew-1]='\0';
 					}

@@ -409,9 +409,10 @@ int be_mysql_aclcheck(void *handle, const char *clientid, const char *username, 
 					removeChar(topicNew,'+');
 
 					//remove the last #
-					if(topicNew[length-1]=='#')
+					size_t lennew=strlen(topic);
+					if(topicNew[lennew-1]=='#')
 					{
-						topicNew[length-1]='\0';
+						topicNew[lennew-1]='\0';
 					}
 					mosquitto_topic_matches_sub(expanded, topicNew, &bf);
 					_log(LOG_DEBUG, "mysql: mosquitto_topic_matches_sub(%s, %s) == %d",

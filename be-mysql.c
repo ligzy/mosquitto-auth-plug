@@ -203,6 +203,8 @@ int be_mysql_getuser(void *handle, const char *username, const char *password, c
 	MYSQL_RES *res = NULL;
 	MYSQL_ROW rowdata;
 
+	_log(LOG_DEBUG, "be_mysql_getuser: %s,%s, %s",clientid,username, password);
+
 	// fprintf(stderr, "------>%s<-----\n", clientid);
 	if (!conf || !conf->userquery || !username || !*username)
 		return BACKEND_DEFER;
@@ -249,6 +251,9 @@ out:
 	free(query);
 
 	*phash = value;
+	_log(LOG_DEBUG, "be_mysql_getuser: %s,%s, %s =%d",clientid,username, password,BACKEND_DEFER);
+
+
 	return BACKEND_DEFER;
 }
 
@@ -265,6 +270,7 @@ int be_mysql_superuser(void *handle, const char *username)
 	MYSQL_RES *res = NULL;
 	MYSQL_ROW rowdata;
 
+	_log(LOG_DEBUG, "be_mysql_superuser: %s ",username);
 
 	if (!conf || !conf->superquery)
 		return BACKEND_DEFER;
